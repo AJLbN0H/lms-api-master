@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from materials.models import Course, Lesson
+
 
 class User(AbstractUser):
     username = None
@@ -39,3 +41,34 @@ class User(AbstractUser):
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
+
+
+class Payments(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь",
+        blank=True,
+        null=True,
+    )
+    payment_date = models.DateTimeField(auto_now_add=True)
+    paid_course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        verbose_name="Оплаченый курс",
+        blank=True,
+        null=True,
+    )
+    paid_lesson = models.ForeignKey(
+        Lesson,
+        on_delete=models.CASCADE,
+        verbose_name="Оплаченый урок",
+        blank=True,
+        null=True,
+    )
+
+    PAYMENT_METHODS = [
+        ("cash", "Наличные"),
+        ("transfer", "Перевод на счет"),
+    ]
+    payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS)
