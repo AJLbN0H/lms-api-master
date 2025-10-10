@@ -5,10 +5,11 @@ from rest_framework.generics import (
     UpdateAPIView,
     DestroyAPIView,
 )
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from materials.models import Course, Lesson
-from materials.permissions import RightsCheck
+from materials.permissions import IsModer, IsOwner
 from materials.serializer import (
     CourseSerializer,
     LessonSerializer,
@@ -17,48 +18,63 @@ from materials.serializer import (
 
 
 class CourseViewSet(ModelViewSet):
-    """
-    ViewSet курсов
-    """
-
+    """ViewSet курсов."""
     queryset = Course.objects.all()
 
     def get_serializer_class(self):
+        """Получение нужного сериалайзера."""
         if self.action == "retrieve":
             return CourseDetailSerializer
         return CourseSerializer
 
     def get_permissions(self):
-        if self.action in ["create", "destroy"]:
-            self.permission_classes = (~RightsCheck,)
+        """Метод проверки прав доступа."""
+        if self.action == "create":
+            self.permission_classes = (~IsModer,)
         elif self.action in ["update", "retrieve"]:
-            self.permission_classes = (RightsCheck,)
+            self.permission_classes = (IsModer | IsOwner,)
+        elif self.action == "destroy":
+            self.permission_classes = (~IsModer | IsOwner,)
         return super().get_permissions()
+
+    def perform_create(self, serializer):
+        """Метод переопределяющий при создании урока поле owner на текущего авторизованного пользователя."""
+        serializer.save(owner=self.request.user)
 
 
 class LessonListApiView(ListAPIView):
+    """Generic вывода списка уроков."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [RightsCheck]
 
 
 class LessonCreateApiView(CreateAPIView):
+    """Generic создания урока."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    permission_classes = [IsAuthenticated, ~IsModer]
+
+    def perform_create(self, serializer):
+        """Метод переопределяющий при создании урока поле owner на текущего авторизованного пользователя."""
+        serializer.save(owner=self.request.user)
 
 
 class LessonRetrieveApiView(RetrieveAPIView):
+    """Generic просмотра детальной информации урока."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [RightsCheck]
+    permission_classes = [IsAuthenticated, IsModer | IsOwner]
 
 
 class LessonUpdateApiView(UpdateAPIView):
+    """Generic обновления информации урока."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [RightsCheck]
+    permission_classes = [IsAuthenticated, IsModer | IsOwner]
 
 
 class LessonDestroyApiView(DestroyAPIView):
+    """Generic удаления урока."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    permission_classes = [IsAuthenticated, ~IsModer | IsOwner]
