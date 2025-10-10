@@ -29,13 +29,11 @@ class CourseViewSet(ModelViewSet):
         return CourseSerializer
 
     def get_permissions(self):
-        if self.action in ['create', 'destroy']:
-            self.permission_classes = (~RightsCheck, )
-        elif self.action in ['update', 'retrieve']:
-                self.permission_classes = (RightsCheck,)
+        if self.action in ["create", "destroy"]:
+            self.permission_classes = (~RightsCheck,)
+        elif self.action in ["update", "retrieve"]:
+            self.permission_classes = (RightsCheck,)
         return super().get_permissions()
-
-
 
 
 class LessonListApiView(ListAPIView):

@@ -7,7 +7,8 @@ from users.views import (
     PaymentsCreateApiView,
     PaymentsUpdateApiView,
     PaymentsRetrieveApiView,
-    PaymentsDestroyApiView, UserCreateApiView,
+    PaymentsDestroyApiView,
+    UserCreateApiView,
 )
 
 app_name = "users"
@@ -24,8 +25,15 @@ urlpatterns = [
         PaymentsDestroyApiView.as_view(),
         name="payments_delete",
     ),
-
-    path('register/', UserCreateApiView.as_view(), name='register'),
-    path('login/', TokenObtainPairView.as_view(permission_classes=(AllowAny,)), name='login'),
-    path('token/refresh/', TokenRefreshView.as_view(permission_classes=(AllowAny,)), name='token_refresh'),
+    path("register/", UserCreateApiView.as_view(), name="register"),
+    path(
+        "login/",
+        TokenObtainPairView.as_view(permission_classes=(AllowAny,)),
+        name="login",
+    ),
+    path(
+        "token/refresh/",
+        TokenRefreshView.as_view(permission_classes=(AllowAny,)),
+        name="token_refresh",
+    ),
 ]

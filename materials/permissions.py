@@ -4,4 +4,4 @@ from rest_framework.permissions import BasePermission
 class RightsCheck(BasePermission):
 
     def has_permission(self, request, view):
-        return request.user.groups.filter(name='Модераторы').exists()
+        return request.user.groups.filter(name="Модераторы").exists()
