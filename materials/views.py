@@ -8,6 +8,7 @@ from rest_framework.generics import (
 from rest_framework.viewsets import ModelViewSet
 
 from materials.models import Course, Lesson
+from materials.permissions import RightsCheck
 from materials.serializer import (
     CourseSerializer,
     LessonSerializer,
@@ -27,10 +28,20 @@ class CourseViewSet(ModelViewSet):
             return CourseDetailSerializer
         return CourseSerializer
 
+    def get_permissions(self):
+        if self.action in ['create', 'destroy']:
+            self.permission_classes = (~RightsCheck, )
+        elif self.action in ['update', 'retrieve']:
+                self.permission_classes = (RightsCheck,)
+        return super().get_permissions()
+
+
+
 
 class LessonListApiView(ListAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    permission_classes = [RightsCheck]
 
 
 class LessonCreateApiView(CreateAPIView):
@@ -41,11 +52,13 @@ class LessonCreateApiView(CreateAPIView):
 class LessonRetrieveApiView(RetrieveAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    permission_classes = [RightsCheck]
 
 
 class LessonUpdateApiView(UpdateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    permission_classes = [RightsCheck]
 
 
 class LessonDestroyApiView(DestroyAPIView):
