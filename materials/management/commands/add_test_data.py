@@ -6,6 +6,7 @@ from users.models import User, Payments
 
 
 class Command(BaseCommand):
+    """Кастомная комманда для заполнения абзы данных."""
 
     help = "Добавляет тестовые данные в базу данных для модели Payments"
 

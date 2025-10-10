@@ -5,9 +5,7 @@ from materials.models import Course, Lesson
 
 
 class CourseSerializer(ModelSerializer):
-    """
-    Serializer вывода курсов
-    """
+    """Serializer вывода курсов."""
 
     class Meta:
         model = Course
@@ -15,9 +13,7 @@ class CourseSerializer(ModelSerializer):
 
 
 class CourseDetailSerializer(ModelSerializer):
-    """
-    Serializer, который дополнительно выводит количество уроков определенного курса и выводит детальную инфу этих уроков
-    """
+    """Serializer, который дополнительно выводит количество уроков определенного курса и выводит детальную инфу этих уроков."""
 
     number_of_lessons = SerializerMethodField()
     lessons = CourseSerializer(source="lesson_set", many=True, read_only=True)
@@ -31,9 +27,7 @@ class CourseDetailSerializer(ModelSerializer):
 
 
 class LessonSerializer(ModelSerializer):
-    """
-    Serializer вывода уроков
-    """
+    """Serializer вывода уроков."""
 
     class Meta:
         model = Lesson
