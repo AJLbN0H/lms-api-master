@@ -15,6 +15,7 @@ from users.serializer import PaymentsSerializer, UserSerializer
 
 class PaymentsListApiView(ListAPIView):
     """Generic вывода списка платежей."""
+
     queryset = Payments.objects.all()
     serializer_class = PaymentsSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
@@ -24,30 +25,35 @@ class PaymentsListApiView(ListAPIView):
 
 class PaymentsCreateApiView(CreateAPIView):
     """Generic создания платежа."""
+
     queryset = Payments.objects.all()
     serializer_class = PaymentsSerializer
 
 
 class PaymentsRetrieveApiView(RetrieveAPIView):
     """Generic просмотра детальной информации о платеже."""
+
     queryset = Payments.objects.all()
     serializer_class = PaymentsSerializer
 
 
 class PaymentsUpdateApiView(UpdateAPIView):
     """Generic обновления информации о платеже."""
+
     queryset = Payments.objects.all()
     serializer_class = PaymentsSerializer
 
 
 class PaymentsDestroyApiView(DestroyAPIView):
     """Generic удаления платежа."""
+
     queryset = Payments.objects.all()
     serializer_class = PaymentsSerializer
 
 
 class UserCreateApiView(CreateAPIView):
     """Generic создания пользовтеля"""
+
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = (AllowAny,)

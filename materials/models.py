@@ -51,7 +51,7 @@ class Lesson(models.Model):
         blank=True,
         help_text="Загрузите картинку",
     )
-    link_to_the_video = models.CharField(
+    link_to_the_video = models.URLField(
         max_length=300,
         verbose_name="Ссылка на видео",
         blank=True,

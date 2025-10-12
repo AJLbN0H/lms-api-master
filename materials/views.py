@@ -19,6 +19,7 @@ from materials.serializer import (
 
 class CourseViewSet(ModelViewSet):
     """ViewSet курсов."""
+
     queryset = Course.objects.all()
 
     def get_serializer_class(self):
@@ -44,12 +45,14 @@ class CourseViewSet(ModelViewSet):
 
 class LessonListApiView(ListAPIView):
     """Generic вывода списка уроков."""
+
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
 
 
 class LessonCreateApiView(CreateAPIView):
     """Generic создания урока."""
+
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     permission_classes = [IsAuthenticated, ~IsModer]
@@ -61,6 +64,7 @@ class LessonCreateApiView(CreateAPIView):
 
 class LessonRetrieveApiView(RetrieveAPIView):
     """Generic просмотра детальной информации урока."""
+
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     permission_classes = [IsAuthenticated, IsModer | IsOwner]
@@ -68,6 +72,7 @@ class LessonRetrieveApiView(RetrieveAPIView):
 
 class LessonUpdateApiView(UpdateAPIView):
     """Generic обновления информации урока."""
+
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     permission_classes = [IsAuthenticated, IsModer | IsOwner]
@@ -75,6 +80,7 @@ class LessonUpdateApiView(UpdateAPIView):
 
 class LessonDestroyApiView(DestroyAPIView):
     """Generic удаления урока."""
+
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     permission_classes = [IsAuthenticated, ~IsModer | IsOwner]

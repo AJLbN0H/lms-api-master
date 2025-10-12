@@ -1,10 +1,11 @@
 from rest_framework.fields import SerializerMethodField
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 
 from materials.models import Course, Lesson
+from materials.validators import validate_link_to_the_video
 
 
-class CourseSerializer(ModelSerializer):
+class CourseSerializer(serializers.ModelSerializer):
     """Serializer вывода курсов."""
 
     class Meta:
@@ -12,7 +13,7 @@ class CourseSerializer(ModelSerializer):
         fields = "__all__"
 
 
-class CourseDetailSerializer(ModelSerializer):
+class CourseDetailSerializer(serializers.ModelSerializer):
     """Serializer, который дополнительно выводит количество уроков определенного курса и выводит детальную инфу этих уроков."""
 
     number_of_lessons = SerializerMethodField()
@@ -26,8 +27,10 @@ class CourseDetailSerializer(ModelSerializer):
         fields = ("name", "preview", "description", "number_of_lessons", "lessons")
 
 
-class LessonSerializer(ModelSerializer):
+class LessonSerializer(serializers.ModelSerializer):
     """Serializer вывода уроков."""
+
+    link_to_the_video = serializers.CharField(validators=[validate_link_to_the_video])
 
     class Meta:
         model = Lesson

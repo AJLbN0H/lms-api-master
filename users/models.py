@@ -72,3 +72,23 @@ class Payments(models.Model):
         ("transfer", "Перевод на счет"),
     ]
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS)
+
+
+class Subscriptions(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь",
+        blank=True,
+        null=True,
+    )
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        verbose_name="Оплаченый курс",
+        blank=True,
+        null=True,
+    )
+    subscription_sign = models.BooleanField(
+        default=False, verbose_name="Пользователь подписан"
+    )
