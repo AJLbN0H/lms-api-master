@@ -8,6 +8,7 @@ from users.models import User
 
 
 class LessonTest(APITestCase):
+    """Класс тестирования уроков."""
 
     def setUp(self):
         self.user1 = User.objects.create(email="tester1@admin.py")

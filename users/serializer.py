@@ -1,8 +1,6 @@
-from django.shortcuts import get_object_or_404
 from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 
-from materials.models import Course
 from users.models import Payments, User, Subscriptions
 
 

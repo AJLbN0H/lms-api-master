@@ -13,10 +13,9 @@ class SubscriptionsTest(APITestCase):
         self.course1 = Course.objects.create(
             name="1 тест", description="1", owner=self.user
         )
-        self.course2 = Course.objects.create(name="2 тест", description="2")
 
     def test_subscriptions_post(self):
-        """Тестирование подписки на курс."""
+        """Тестирование добавления и удаления подписки пользователя на курс."""
 
         url = reverse("users:subscription")
 
