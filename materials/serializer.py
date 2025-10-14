@@ -1,3 +1,4 @@
+from PIL.Image import blend
 from rest_framework.fields import SerializerMethodField
 from rest_framework import serializers
 
@@ -30,7 +31,9 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 class LessonSerializer(serializers.ModelSerializer):
     """Serializer вывода уроков."""
 
-    link_to_the_video = serializers.CharField(validators=[validate_link_to_the_video])
+    link_to_the_video = serializers.CharField(
+        validators=[validate_link_to_the_video], required=False
+    )
 
     class Meta:
         model = Lesson

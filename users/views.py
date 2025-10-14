@@ -76,20 +76,19 @@ class SubscriptionsListApiView(ListAPIView):
 
     def post(self, *args, **kwargs):
         user = self.request.user
-        course_id = self.request.data.get('course_id')
+        course_id = self.request.data.get("course_id")
         course_item = get_object_or_404(Course, id=course_id)
         subs_item = Subscriptions.objects.filter(user=user, course=course_item)
 
         if not subs_item.exists():
-            new_subscription = Subscriptions.objects.create(user=user, course=course_item, subscription_sign=True)
-            message = 'подписка добавлена'
+            new_subscription = Subscriptions.objects.create(
+                user=user, course=course_item, subscription_sign=True
+            )
+            message = "подписка добавлена"
             new_subscription.save()
 
         else:
             subs_item.delete()
-            message = 'подписка удалена'
-
-
+            message = "подписка удалена"
 
         return Response({"message": message})
-

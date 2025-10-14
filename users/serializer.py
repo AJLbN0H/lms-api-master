@@ -27,11 +27,10 @@ class SubscriptionsSerializer(ModelSerializer):
 
     subscription_sign = SerializerMethodField()
 
-    def get_subscription_sign(self, *args, **kwargs):
-        user = self.context['request'].user
-        # course_item = get_object_or_404(Course, id=self.context['request'].data.get('course_id'))
-        return Subscriptions.objects.filter(user=user).exists()
+    def get_subscription_sign(self, obj):
+        user = self.context["request"].user
+        return Subscriptions.objects.filter(user=user, course=obj.course).exists()
 
     class Meta:
         model = Subscriptions
-        fields = ('user', 'course', 'subscription_sign')
+        fields = ("user", "course", "subscription_sign")

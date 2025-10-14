@@ -8,7 +8,8 @@ from users.views import (
     PaymentsUpdateApiView,
     PaymentsRetrieveApiView,
     PaymentsDestroyApiView,
-    UserCreateApiView, SubscriptionsListApiView,
+    UserCreateApiView,
+    SubscriptionsListApiView,
 )
 
 app_name = "users"
