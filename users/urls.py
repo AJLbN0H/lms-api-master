@@ -9,6 +9,7 @@ from users.views import (
     PaymentsRetrieveApiView,
     PaymentsDestroyApiView,
     UserCreateApiView,
+    SubscriptionsListApiView,
 )
 
 app_name = "users"
@@ -35,5 +36,10 @@ urlpatterns = [
         "token/refresh/",
         TokenRefreshView.as_view(permission_classes=(AllowAny,)),
         name="token_refresh",
+    ),
+    path(
+        "subscription/",
+        SubscriptionsListApiView.as_view(permission_classes=(AllowAny,)),
+        name="subscription",
     ),
 ]

@@ -1,6 +1,9 @@
+from django.shortcuts import get_object_or_404
+from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 
-from users.models import Payments, User
+from materials.models import Course
+from users.models import Payments, User, Subscriptions
 
 
 class PaymentsSerializer(ModelSerializer):
@@ -12,8 +15,22 @@ class PaymentsSerializer(ModelSerializer):
 
 
 class UserSerializer(ModelSerializer):
-    """Serializer вывода платежей."""
+    """Serializer вывода пользователей."""
 
     class Meta:
         model = User
         fields = "__all__"
+
+
+class SubscriptionsSerializer(ModelSerializer):
+    """Serializer вывода подписки."""
+
+    subscription_sign = SerializerMethodField()
+
+    def get_subscription_sign(self, obj):
+        user = self.context["request"].user
+        return Subscriptions.objects.filter(user=user, course=obj.course).exists()
+
+    class Meta:
+        model = Subscriptions
+        fields = ("user", "course", "subscription_sign")

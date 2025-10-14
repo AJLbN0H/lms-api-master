@@ -26,10 +26,10 @@ class Command(BaseCommand):
         )
 
         course1, _ = Course.objects.get_or_create(
-            name="Курс 1", description="Легкий курс"
+            name="Курс 1", description="Легкий курс", owner=user1
         )
         course2, _ = Course.objects.get_or_create(
-            name="Курс 2", description="Сложный курс"
+            name="Курс 2", description="Сложный курс", owner=user2
         )
 
         payments = [
@@ -50,11 +50,13 @@ class Command(BaseCommand):
                 "name": "Python",
                 "description": "Легкий урок",
                 "course": course1,
+                "owner": user1,
             },
             {
                 "name": "Java",
                 "description": "Сложный урок",
                 "course": course2,
+                "owner": user2,
             },
         ]
 
