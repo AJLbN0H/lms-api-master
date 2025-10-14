@@ -55,7 +55,7 @@ class PaymentsDestroyApiView(DestroyAPIView):
 
 
 class UserCreateApiView(CreateAPIView):
-    """Generic создания пользовтеля"""
+    """Generic создания пользователя"""
 
     serializer_class = UserSerializer
     queryset = User.objects.all()
@@ -75,6 +75,7 @@ class SubscriptionsListApiView(ListAPIView):
     serializer_class = SubscriptionsSerializer
 
     def post(self, *args, **kwargs):
+        """Метод добавления и удаления подписки у пользователя."""
         user = self.request.user
         course_id = self.request.data.get("course_id")
         course_item = get_object_or_404(Course, id=course_id)
