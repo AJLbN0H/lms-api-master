@@ -25,6 +25,9 @@ class Course(models.Model):
         null=True,
         on_delete=models.CASCADE,
     )
+    price = models.PositiveIntegerField(
+        verbose_name="Цена курса/урока", blank=True, null=True
+    )
 
     def __str__(self):
         return self.name
