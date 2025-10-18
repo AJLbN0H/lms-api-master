@@ -56,13 +56,11 @@ class Payments(models.Model):
         Course,
         on_delete=models.CASCADE,
         verbose_name="Оплаченый курс",
-        blank=True,
-        null=True,
     )
     paid_lesson = models.ForeignKey(
         Lesson,
         on_delete=models.CASCADE,
-        verbose_name="Оплаченый урок",
+        verbose_name="Оплаченный урок",
         blank=True,
         null=True,
     )
@@ -71,7 +69,30 @@ class Payments(models.Model):
         ("cash", "Наличные"),
         ("transfer", "Перевод на счет"),
     ]
-    payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS)
+    payment_method = models.CharField(
+        max_length=10, choices=PAYMENT_METHODS, blank=True, null=True
+    )
+    session_id = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="ID сессии",
+        help_text="Укажите ID сессии",
+    )
+    link = models.URLField(
+        max_length=600,
+        blank=True,
+        null=True,
+        verbose_name="Ссылка на оплату",
+        help_text="Укажите ссылку на оплату",
+    )
+
+    def __str__(self):
+        return self.user
+
+    class Meta:
+        verbose_name = "Платеж"
+        verbose_name_plural = "Платежи"
 
 
 class Subscriptions(models.Model):
@@ -85,10 +106,17 @@ class Subscriptions(models.Model):
     course = models.ForeignKey(
         Course,
         on_delete=models.CASCADE,
-        verbose_name="Оплаченый курс",
+        verbose_name="Оплаченный курс",
         blank=True,
         null=True,
     )
     subscription_sign = models.BooleanField(
         default=False, verbose_name="Пользователь подписан"
     )
+
+    def __str__(self):
+        return self.user
+
+    class Meta:
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"

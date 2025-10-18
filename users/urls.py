@@ -20,7 +20,11 @@ urlpatterns = [
     path(
         "payments/<int:pk>", PaymentsRetrieveApiView.as_view(), name="payments_retrieve"
     ),
-    path("payments/<int:pk>/update/", PaymentsUpdateApiView.as_view(), name="v_update"),
+    path(
+        "payments/<int:pk>/update/",
+        PaymentsUpdateApiView.as_view(),
+        name="payments_update",
+    ),
     path(
         "payments/<int:pk>/delete/",
         PaymentsDestroyApiView.as_view(),

@@ -14,6 +14,7 @@ from rest_framework.response import Response
 from materials.models import Course
 from users.models import Payments, User, Subscriptions
 from users.serializer import PaymentsSerializer, UserSerializer, SubscriptionsSerializer
+from users.services import create_product, create_session, create_price
 
 
 class PaymentsListApiView(ListAPIView):
@@ -31,6 +32,21 @@ class PaymentsCreateApiView(CreateAPIView):
 
     queryset = Payments.objects.all()
     serializer_class = PaymentsSerializer
+
+    def perform_create(self, serializer):
+        """Метод, в котором создается товар, цена и сессия."""
+
+        payment = serializer.save(user=self.request.user)
+
+        price_course = create_product(payment.paid_course.id)
+
+        price = create_price(price_course.price)
+
+        session_id, payment_link = create_session(price)
+
+        payment.session_id = session_id
+        payment.link = payment_link
+        payment.save()
 
 
 class PaymentsRetrieveApiView(RetrieveAPIView):
@@ -63,6 +79,7 @@ class UserCreateApiView(CreateAPIView):
 
     def perform_create(self, serializer):
         """Метод активации пользователя при создании его создании."""
+
         user = serializer.save(is_active=True)
         user.set_password(user.password)
         user.save()
@@ -76,6 +93,7 @@ class SubscriptionsListApiView(ListAPIView):
 
     def post(self, *args, **kwargs):
         """Метод добавления и удаления подписки у пользователя."""
+
         user = self.request.user
         course_id = self.request.data.get("course_id")
         course_item = get_object_or_404(Course, id=course_id)
