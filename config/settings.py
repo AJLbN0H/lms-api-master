@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "materials",
     "rest_framework_simplejwt",
     "drf_yasg",
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,10 @@ SIMPLE_JWT = {
 }
 
 STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
+
+CELERY_BEAT_SCHEDULE = {
+    'task-name': {
+        'task': 'users.tasks.blocking_inactive_users',
+        'schedule': timedelta(minutes=10),
+    },
+}
