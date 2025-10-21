@@ -16,6 +16,7 @@ from materials.serializer import (
     LessonSerializer,
     CourseDetailSerializer,
 )
+from materials.tasks import checking_for_rate_updates
 
 
 class CourseViewSet(ModelViewSet):
@@ -43,6 +44,10 @@ class CourseViewSet(ModelViewSet):
     def perform_create(self, serializer):
         """Метод переопределяющий при создании урока поле owner на текущего авторизованного пользователя."""
         serializer.save(owner=self.request.user)
+
+    def perform_update(self, serializer):
+        updated_course = serializer.save()
+        checking_for_rate_updates.delay(updated_course.id)
 
 
 class LessonListApiView(ListAPIView):
