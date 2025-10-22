@@ -3,8 +3,10 @@ from django.core.mail import send_mail
 
 from users.models import Subscriptions
 
+
 @shared_task
 def checking_for_rate_updates(pk):
+    """Когда курс обновлен — тем, кто подписан на обновления именно этого курса, отправляется письмо на почту."""
     subscriptions = Subscriptions.objects.all()
     users_list = []
     for user in subscriptions:

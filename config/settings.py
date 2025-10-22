@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "materials",
     "rest_framework_simplejwt",
     "drf_yasg",
-    'django_celery_beat',
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -156,21 +156,21 @@ SIMPLE_JWT = {
 STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
 
 CELERY_BEAT_SCHEDULE = {
-    'task-name': {
-        'task': 'users.tasks.blocking_inactive_users',
-        'schedule': timedelta(minutes=10),
+    "task-name": {
+        "task": "users.tasks.blocking_inactive_users",
+        "schedule": timedelta(minutes=5),
     },
 }
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
     }
 }
 
-CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
-CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.yandex.ru"
