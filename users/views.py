@@ -15,6 +15,7 @@ from materials.models import Course
 from users.models import Payments, User, Subscriptions
 from users.serializer import PaymentsSerializer, UserSerializer, SubscriptionsSerializer
 from users.services import create_product, create_session, create_price
+from users.tasks import blocking_inactive_users
 
 
 class PaymentsListApiView(ListAPIView):
@@ -25,6 +26,8 @@ class PaymentsListApiView(ListAPIView):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ("paid_course", "paid_lesson")
     ordering_fields = ["payment_date"]
+    if queryset:
+        blocking_inactive_users.delay()
 
 
 class PaymentsCreateApiView(CreateAPIView):
