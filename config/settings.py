@@ -26,7 +26,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-0y7qw-z&sl)a-+_!z-#8mb2ts(c)b3t=fo@lwr#bb&lnc#_!(p"
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-habits-key-123')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
