@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - SECRET_KEY=django-insecure-lms-platform-key
+      - DEBUG=True
+      - NAME=postgres
+      - USER=postgres
+      - PASSWORD=postgres
+      - HOST=db
+      - PORT=5432
+
+volumes:
+  postgres_data:
