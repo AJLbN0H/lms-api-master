@@ -26,8 +26,6 @@ class PaymentsListApiView(ListAPIView):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ("paid_course", "paid_lesson")
     ordering_fields = ["payment_date"]
-    if queryset:
-        blocking_inactive_users.delay()
 
 
 class PaymentsCreateApiView(CreateAPIView):
