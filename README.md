@@ -35,7 +35,7 @@
     git clone https://github.com/AJLbN0H/lms-api-master.git
 
 2. Настройка переменных окружения:
-Создайте файл `.env` на основе `.env.example` и укажите параметры БД и API ключи Stripe.
+Создайте файл `.env` на основе `.env.sample` и укажите параметры БД и API ключи Stripe.
 
 3. Запуск через Docker:
 

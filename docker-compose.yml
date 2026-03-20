@@ -7,14 +7,13 @@ services:
     env_file:
       - .env
     environment:
-      # Жестко привязываем твои переменные из .env к требованиям образа Postgres
       POSTGRES_DB: ${NAME}
       POSTGRES_USER: ${USER}
       POSTGRES_PASSWORD: ${PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${USER} -d ${NAME}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${USER} -d ${NAME}" ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -39,7 +38,6 @@ services:
         condition: service_started
     command: >
       sh -c "python manage.py migrate &&
-             pytest &&
              python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
