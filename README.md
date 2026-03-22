@@ -1,4 +1,4 @@
-# LMS API Master
+# LMS Core API
 
 Backend for an educational platform: REST API for courses and lessons, role-based permissions, subscriptions and payments (Stripe), background jobs with **Celery**, and interactive API docs via **drf-yasg** (Swagger / ReDoc).
 
@@ -7,7 +7,7 @@ Backend for an educational platform: REST API for courses and lessons, role-base
 ![DRF](https://img.shields.io/badge/DRF-3.16+-red.svg)
 ![PostgreSQL](https://img.shields.io/badge/postgresql-15-blue.svg)
 ![Redis](https://img.shields.io/badge/redis-broker-red.svg)
-[![Tests](https://github.com/AJLbN0H/lms-api-master/actions/workflows/tests.yml/badge.svg)](https://github.com/AJLbN0H/lms-api-master/actions/workflows/tests.yml)
+[![Tests](https://github.com/AJLbN0H/lms-core-api/actions/workflows/tests.yml/badge.svg)](https://github.com/AJLbN0H/lms-core-api/actions/workflows/tests.yml)
 
 ## Features
 
@@ -40,8 +40,8 @@ Backend for an educational platform: REST API for courses and lessons, role-base
 1. Clone the repo:
 
    ```bash
-   git clone https://github.com/AJLbN0H/lms-api-master.git
-   cd lms-api-master
+   git clone https://github.com/AJLbN0H/lms-core-api.git
+   cd lms-core-api
    ```
 
 2. Copy the environment template and set secrets:

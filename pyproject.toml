@@ -1,7 +1,7 @@
 [project]
-name = "lms-api-master"
+name = "lms-core-api"
 version = "0.1.0"
-description = "Django REST API for an LMS: courses, lessons, JWT auth, Celery, Stripe, Swagger."
+description = "LMS Core API — Django REST backend: courses, lessons, JWT, Celery, Stripe, Swagger."
 authors = [
     {name = "alexander vagin",email = "sashavagin1987@gmail.com"}
 ]
